@@ -89,112 +89,128 @@ const Testimonials: React.FC = () => {
       <style jsx>{`
         .fade-in {
           opacity: 0;
-          transform: translateY(30px);
+          transform: translateY(1.875rem);
           transition: all 0.8s ease-out;
+          
+          &.visible {
+            opacity: 1;
+            transform: translateY(0);
+          }
         }
-        .fade-in.visible {
-          opacity: 1;
-          transform: translateY(0);
-        }
+        
         .carousel-container {
-          position: relative; /* Keep relative for track positioning if needed, but not for buttons */
-          overflow: hidden; /* This will hide parts of the track during transition */
-          border-radius: 16px;
+          position: relative;
+          overflow: hidden;
+          border-radius: 1rem;
         }
+        
         .carousel-track {
           display: flex;
           transition: transform 1s cubic-bezier(0.25, 0.1, 0.25, 1);
           will-change: transform;
         }
+        
         .testimonial-slide {
           min-width: 100%;
-          padding: 0 20px; /* This padding is inside the slide */
+          padding: 0 1.25rem;
           box-sizing: border-box;
-          height: 300px;
+          height: 18.75rem;
         }
+        
         .testimonial-card {
           background: white;
-          border-radius: 12px;
-          padding: 32px;
-          margin: 0 10px; /* Margin for the card inside the slide */
-          box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+          border-radius: 0.75rem;
+          padding: 2rem;
+          margin: 0 0.625rem;
+          box-shadow: 0 0.625rem 1.875rem rgba(0, 0, 0, 0.1);
           position: relative;
-          overflow: hidden; /* For quote icon or other internal elements if needed */
+          overflow: hidden;
+          
+          &::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 0.25rem;
+            background: linear-gradient(90deg, #fbbf24, #f59e0b);
+          }
         }
-        .testimonial-card::before {
-          content: '';
-          position: absolute;
-          top: 0;
-          left: 0;
-          right: 0;
-          height: 4px;
-          background: linear-gradient(90deg, #fbbf24, #f59e0b);
-        }
-        /* nav-button positioning is now relative to the new wrapper */
+        
         .nav-button {
           position: absolute;
-          top: 50%; /* Vertically centers relative to the new wrapper around carousel-container */
+          top: 50%;
           transform: translateY(-50%);
           z-index: 10;
           background: white;
-          border: 2px solid #fbbf24;
+          border: 0.125rem solid #fbbf24;
           border-radius: 50%;
-          width: 48px;
-          height: 48px;
+          width: 3rem;
+          height: 3rem;
           display: flex;
           align-items: center;
           justify-content: center;
           cursor: pointer;
           transition: all 0.3s ease;
-          box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+          box-shadow: 0 0.25rem 0.75rem rgba(0, 0, 0, 0.15);
+          
+          &:hover {
+            background: #fbbf24;
+            color: white;
+            transform: translateY(-50%) scale(1.1);
+          }
+          
+          &:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+            transform: translateY(-50%) scale(1);
+          }
+          
+          &.prev {
+            left: -0.75rem;
+          }
+          
+          &.next {
+            right: -0.75rem;
+          }
         }
-        .nav-button:hover {
-          background: #fbbf24;
-          color: white;
-          transform: translateY(-50%) scale(1.1);
-        }
-        .nav-button:disabled {
-          opacity: 0.5;
-          cursor: not-allowed;
-          transform: translateY(-50%) scale(1);
-        }
-        .nav-button.prev {
-          left: -12px; /* Sits in the padding of the outer 'px-16' container */
-        }
-        .nav-button.next {
-          right: -12px; /* Sits in the padding of the outer 'px-16' container */
-        }
+        
         .dots-container {
           display: flex;
           justify-content: center;
-          gap: 12px;
-          margin-top: 32px;
+          gap: 0.75rem;
+          margin-top: 2rem;
         }
+        
         .dot {
-          width: 12px;
-          height: 12px;
+          width: 0.75rem;
+          height: 0.75rem;
           border-radius: 50%;
-          border: 2px solid #fbbf24;
+          border: 0.125rem solid #fbbf24;
           background: transparent;
           cursor: pointer;
           transition: all 0.3s ease;
+          
+          &.active {
+            background: #fbbf24;
+            transform: scale(1.2);
+          }
+          
+          &:hover {
+            transform: scale(1.1);
+          }
         }
-        .dot.active {
-          background: #fbbf24;
-          transform: scale(1.2);
-        }
-        .dot:hover {
-          transform: scale(1.1);
-        }
+        
         .rating-stars {
           display: flex;
-          gap: 2px;
-          margin: 16px 0;
+          gap: 0.125rem;
+          margin: 1rem 0;
         }
+        
         .quote-icon {
           position: absolute;
-          top: -10px; /* Adjusted to ensure visibility within card */
-          right: 20px;
+          top: -0.625rem;
+          right: 1.25rem;
           color: #fbbf24;
           opacity: 0.2;
         }
