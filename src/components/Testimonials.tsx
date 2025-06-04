@@ -157,10 +157,10 @@ const Testimonials: React.FC = () => {
           transform: translateY(-50%) scale(1);
         }
         .nav-button.prev {
-          left: -24px;
+          left: -12px;
         }
         .nav-button.next {
-          right: -24px;
+          right: -12px;
         }
         .dots-container {
           display: flex;
@@ -210,7 +210,7 @@ const Testimonials: React.FC = () => {
         </div>
 
         <div className={`fade-in ${inView ? 'visible' : ''}`}>
-          <div className="relative max-w-5xl mx-auto">
+          <div className="relative max-w-5xl mx-auto px-16">
             <div className="carousel-container">
               <div 
                 className="carousel-track"
