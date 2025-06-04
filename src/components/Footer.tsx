@@ -20,16 +20,13 @@ const Footer: React.FC = () => {
               de inglês, com foco em resultados rápidos e eficientes.
             </p>
             <div className="flex space-x-3">
-              <a href="#" className="bg-gray-800 p-2 rounded-full hover:bg-invictus-yellow hover:text-invictus-black transition-colors">
+              <a href="https://web.facebook.com/InvictusIdiomas/" className="bg-gray-800 p-2 rounded-full hover:bg-invictus-yellow hover:text-invictus-black transition-colors">
                 <Facebook size={20} />
               </a>
-              <a href="#" className="bg-gray-800 p-2 rounded-full hover:bg-invictus-yellow hover:text-invictus-black transition-colors">
+              <a href="https://www.instagram.com/invictusidiomasoficial/#" className="bg-gray-800 p-2 rounded-full hover:bg-invictus-yellow hover:text-invictus-black transition-colors">
                 <Instagram size={20} />
               </a>
-              <a href="#" className="bg-gray-800 p-2 rounded-full hover:bg-invictus-yellow hover:text-invictus-black transition-colors">
-                <Twitter size={20} />
-              </a>
-              <a href="#" className="bg-gray-800 p-2 rounded-full hover:bg-invictus-yellow hover:text-invictus-black transition-colors">
+              <a href="https://www.youtube.com/@InvictusIdiomas" className="bg-gray-800 p-2 rounded-full hover:bg-invictus-yellow hover:text-invictus-black transition-colors">
                 <Youtube size={20} />
               </a>
             </div>
