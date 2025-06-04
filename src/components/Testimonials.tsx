@@ -45,42 +45,42 @@ const Testimonials: React.FC = () => {
 
   useEffect(() => {
     let interval: ReturnType<typeof setInterval>;
-    
+
     if (autoplay && !isTransitioning) {
       interval = setInterval(() => {
         goToNext();
-      }, 8000); // Aumentado para 8 segundos para dar tempo de ler
+      }, 8000);
     }
-    
+
     return () => clearInterval(interval);
-  }, [autoplay, activeIndex, isTransitioning]);
+  }, [autoplay, activeIndex, isTransitioning]); // Added activeIndex to dependencies
 
   const goToPrevious = () => {
     if (isTransitioning) return;
-    
+
     setAutoplay(false);
     setIsTransitioning(true);
     setActiveIndex((current) => (current === 0 ? testimonials.length - 1 : current - 1));
-    
+
     setTimeout(() => setIsTransitioning(false), 1000);
   };
 
   const goToNext = () => {
     if (isTransitioning) return;
-    
+
     setIsTransitioning(true);
     setActiveIndex((current) => (current + 1) % testimonials.length);
-    
+
     setTimeout(() => setIsTransitioning(false), 1000);
   };
 
   const goToSlide = (index: number) => {
     if (isTransitioning || index === activeIndex) return;
-    
+
     setAutoplay(false);
     setIsTransitioning(true);
     setActiveIndex(index);
-    
+
     setTimeout(() => setIsTransitioning(false), 1000);
   };
 
@@ -97,8 +97,8 @@ const Testimonials: React.FC = () => {
           transform: translateY(0);
         }
         .carousel-container {
-          position: relative;
-          overflow: hidden;
+          position: relative; /* Keep relative for track positioning if needed, but not for buttons */
+          overflow: hidden; /* This will hide parts of the track during transition */
           border-radius: 16px;
         }
         .carousel-track {
@@ -108,17 +108,17 @@ const Testimonials: React.FC = () => {
         }
         .testimonial-slide {
           min-width: 100%;
-          padding: 0 20px;
+          padding: 0 20px; /* This padding is inside the slide */
           box-sizing: border-box;
         }
         .testimonial-card {
           background: white;
           border-radius: 12px;
           padding: 32px;
-          margin: 0 10px;
+          margin: 0 10px; /* Margin for the card inside the slide */
           box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
           position: relative;
-          overflow: hidden;
+          overflow: hidden; /* For quote icon or other internal elements if needed */
         }
         .testimonial-card::before {
           content: '';
@@ -129,9 +129,10 @@ const Testimonials: React.FC = () => {
           height: 4px;
           background: linear-gradient(90deg, #fbbf24, #f59e0b);
         }
+        /* nav-button positioning is now relative to the new wrapper */
         .nav-button {
           position: absolute;
-          top: 50%;
+          top: 50%; /* Vertically centers relative to the new wrapper around carousel-container */
           transform: translateY(-50%);
           z-index: 10;
           background: white;
@@ -157,10 +158,10 @@ const Testimonials: React.FC = () => {
           transform: translateY(-50%) scale(1);
         }
         .nav-button.prev {
-          left: -12px;
+          left: -12px; /* Sits in the padding of the outer 'px-16' container */
         }
         .nav-button.next {
-          right: -12px;
+          right: -12px; /* Sits in the padding of the outer 'px-16' container */
         }
         .dots-container {
           display: flex;
@@ -191,77 +192,84 @@ const Testimonials: React.FC = () => {
         }
         .quote-icon {
           position: absolute;
-          top: -10px;
+          top: -10px; /* Adjusted to ensure visibility within card */
           right: 20px;
           color: #fbbf24;
           opacity: 0.2;
         }
       `}</style>
-      
+
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center mb-16">
           <h2 className="text-4xl md:text-5xl font-bold mb-6 text-gray-900">
             O que nossos alunos dizem
           </h2>
           <p className="text-xl text-gray-600 max-w-3xl mx-auto leading-relaxed">
-            Veja as histórias de sucesso dos nossos alunos que conquistaram a fluência 
+            Veja as histórias de sucesso dos nossos alunos que conquistaram a fluência
             em inglês com nossa metodologia exclusiva.
           </p>
         </div>
 
         <div className={`fade-in ${inView ? 'visible' : ''}`}>
+          {/* This is the OuterWrapper providing px-16 for button horizontal positioning */}
           <div className="relative max-w-5xl mx-auto px-16">
-            <div className="carousel-container">
-              <div 
-                className="carousel-track"
-                style={{
-                  transform: `translateX(-${activeIndex * 100}%)`
-                }}
-              >
-                {testimonials.map((testimonial, index) => (
-                  <div key={index} className="testimonial-slide">
-                    <div className="testimonial-card">
-                      <Quote size={32} className="quote-icon" />
-                      
-                      <div className="flex flex-col md:flex-row items-center md:items-start gap-8">
-                        <div className="flex-shrink-0 text-center">
-                          <img 
-                            src={testimonial.image} 
-                            alt={testimonial.name} 
-                            className="w-20 h-20 rounded-full object-cover border-4 border-yellow-400 mx-auto"
-                          />
-                          <div className="rating-stars justify-center">
-                            {[...Array(5)].map((_, i) => (
-                              <Star 
-                                key={i}
-                                size={16} 
-                                fill={i < testimonial.rating ? "#fbbf24" : "none"} 
-                                stroke={i < testimonial.rating ? "#fbbf24" : "#d1d5db"}
-                              />
-                            ))}
+
+            {/* NEW: CarouselAndButtonsWrapper - for vertical centering of buttons relative to carousel slides */}
+            <div className="relative">
+              <div className="carousel-container">
+                <div
+                  className="carousel-track"
+                  style={{
+                    transform: `translateX(-${activeIndex * 100}%)`
+                  }}
+                >
+                  {testimonials.map((testimonial, index) => (
+                    <div key={index} className="testimonial-slide">
+                      <div className="testimonial-card">
+                        <Quote size={32} className="quote-icon" />
+
+                        <div className="flex flex-col md:flex-row items-center md:items-start gap-8">
+                          <div className="flex-shrink-0 text-center">
+                            <img
+                              src={testimonial.image}
+                              alt={testimonial.name}
+                              className="w-20 h-20 rounded-full object-cover border-4 border-yellow-400 mx-auto"
+                            />
+                            <div className="rating-stars justify-center">
+                              {[...Array(5)].map((_, i) => (
+                                <Star
+                                  key={i}
+                                  size={16}
+                                  fill={i < testimonial.rating ? "#fbbf24" : "none"}
+                                  stroke={i < testimonial.rating ? "#fbbf24" : "#d1d5db"}
+                                />
+                              ))}
+                            </div>
                           </div>
-                        </div>
-                        
-                        <div className="flex-1 text-center md:text-left">
-                          <p className="text-gray-700 italic mb-6 text-lg leading-relaxed">
-                            "{testimonial.text}"
-                          </p>
-                          <div>
-                            <h4 className="font-semibold text-xl text-gray-900 mb-1">
-                              {testimonial.name}
-                            </h4>
-                            <p className="text-gray-500 text-sm">
-                              {testimonial.role}
+
+                          <div className="flex-1 text-center md:text-left">
+                            <p className="text-gray-700 italic mb-6 text-lg leading-relaxed">
+                              "{testimonial.text}"
                             </p>
+                            <div>
+                              <h4 className="font-semibold text-xl text-gray-900 mb-1">
+                                {testimonial.name}
+                              </h4>
+                              <p className="text-gray-500 text-sm">
+                                {testimonial.role}
+                              </p>
+                            </div>
                           </div>
                         </div>
                       </div>
                     </div>
-                  </div>
-                ))}
+                  ))}
+                </div>
+                {/* Buttons are no longer direct children here */}
               </div>
 
-              <button 
+              {/* Buttons are now children of the new 'relative' wrapper, siblings to 'carousel-container' */}
+              <button
                 onClick={goToPrevious}
                 disabled={isTransitioning}
                 className="nav-button prev"
@@ -269,8 +277,8 @@ const Testimonials: React.FC = () => {
               >
                 <ChevronLeft size={20} />
               </button>
-              
-              <button 
+
+              <button
                 onClick={goToNext}
                 disabled={isTransitioning}
                 className="nav-button next"
@@ -278,8 +286,9 @@ const Testimonials: React.FC = () => {
               >
                 <ChevronRight size={20} />
               </button>
-            </div>
+            </div> {/* End of new 'relative' wrapper for carousel and buttons */}
 
+            {/* Dots container remains a child of the outer 'px-16' wrapper */}
             <div className="dots-container">
               {testimonials.map((_, index) => (
                 <button
@@ -291,7 +300,7 @@ const Testimonials: React.FC = () => {
                 />
               ))}
             </div>
-          </div>
+          </div> {/* End of 'relative max-w-5xl mx-auto px-16' */}
         </div>
       </div>
     </section>
