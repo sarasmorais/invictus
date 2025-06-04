@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useInView } from 'react-intersection-observer';
-import { Send, Phone, Mail, LuClock, Check, Loader } from 'lucide-react';
+import { Send, Phone, Mail, MapPin, Check, Loader, MapPin } from 'lucide-react';
 
 const LeadForm: React.FC = () => {
   const [ref, inView] = useInView({
@@ -151,7 +151,7 @@ const LeadForm: React.FC = () => {
                 
                 <div className="flex items-start">
                   <div className="bg-invictus-yellow p-3 rounded-full mr-4">
-                    <LuClock size={24} className="text-invictus-black" />
+                    <MapPin size={24} className="text-invictus-black" />
                   </div>
                   <div>
                     <h3 className="font-semibold text-xl mb-1">Endereço</h3>
