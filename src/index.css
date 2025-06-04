@@ -29,7 +29,7 @@ p {
 }
 
 .container-custom {
-  @apply px-4 mx-auto max-w-6xl;
+  @apply px-4 mx-auto max-w-7xl;
 }
 
 .btn-primary {
@@ -44,8 +44,10 @@ p {
 
 .btn-outline {
   @apply border-2 border-invictus-yellow text-invictus-black font-medium py-3 px-6 
-         rounded-md hover:bg-invictus-yellow transition duration-300 ease-in-out;
+         rounded-md hover:bg-invictus-yellow hover:text-white hover:border-invictus-yellow 
+         transition duration-300 ease-in-out;
 }
+
 
 .fade-in {
   opacity: 0;
