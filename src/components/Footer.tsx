@@ -96,12 +96,6 @@ const Footer: React.FC = () => {
                 <Phone size={20} className="text-invictus-yellow mr-2 mt-1 flex-shrink-0" />
                 <span className="text-gray-300">(11) 3456-7890<br />(11) 98765-4321</span> {/* Mantido o contato original */}
               </li>
-              <li>
-                <p className="text-gray-300">
-                  Av. Paulista, 1000 - Bela Vista<br /> {/* Mantido o endereço original */}
-                  São Paulo - SP, 01310-100
-                </p>
-              </li>
             </ul>
           </div>
         </div>
