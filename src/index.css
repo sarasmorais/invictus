@@ -1,0 +1,79 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --invictus-yellow: #FFD700;
+  --invictus-black: #1A1A1A;
+  --invictus-gray: #F5F5F5;
+  --invictus-dark-gray: #333333;
+  --transition-normal: all 0.3s ease;
+}
+
+body {
+  font-family: 'Poppins', sans-serif;
+  @apply bg-white text-invictus-black;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  @apply font-semibold;
+  line-height: 1.2;
+}
+
+p {
+  line-height: 1.5;
+}
+
+.section-padding {
+  @apply py-16 md:py-24;
+}
+
+.container-custom {
+  @apply px-4 mx-auto max-w-7xl;
+}
+
+.btn-primary {
+  @apply bg-invictus-yellow text-invictus-black font-medium py-3 px-6 rounded-md 
+         hover:bg-yellow-500 transition duration-300 ease-in-out;
+}
+
+.btn-secondary {
+  @apply bg-invictus-black text-white font-medium py-3 px-6 rounded-md 
+         hover:bg-gray-800 transition duration-300 ease-in-out;
+}
+
+.btn-outline {
+  @apply border-2 border-invictus-yellow text-invictus-black font-medium py-3 px-6 
+         rounded-md hover:bg-invictus-yellow transition duration-300 ease-in-out;
+}
+
+.fade-in {
+  opacity: 0;
+  transform: translateY(20px);
+  transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+}
+
+.fade-in.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.card-custom {
+  @apply bg-white rounded-xl shadow-card overflow-hidden transition-all duration-300 hover:shadow-card-hover;
+}
+
+@keyframes float {
+  0% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(-10px);
+  }
+  100% {
+    transform: translateY(0px);
+  }
+}
+
+.float-animation {
+  animation: float 3s ease-in-out infinite;
+}
