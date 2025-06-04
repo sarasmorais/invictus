@@ -10,6 +10,7 @@ const Testimonials: React.FC = () => {
 
   const [activeIndex, setActiveIndex] = useState(0);
   const [autoplay, setAutoplay] = useState(true);
+  const [isTransitioning, setIsTransitioning] = useState(false);
 
   const testimonials = [
     {
@@ -45,105 +46,248 @@ const Testimonials: React.FC = () => {
   useEffect(() => {
     let interval: ReturnType<typeof setInterval>;
     
-    if (autoplay) {
+    if (autoplay && !isTransitioning) {
       interval = setInterval(() => {
-        setActiveIndex((current) => (current + 1) % testimonials.length);
-      }, 5000);
+        goToNext();
+      }, 8000); // Aumentado para 8 segundos para dar tempo de ler
     }
     
     return () => clearInterval(interval);
-  }, [autoplay, testimonials.length]);
+  }, [autoplay, activeIndex, isTransitioning]);
 
   const goToPrevious = () => {
+    if (isTransitioning) return;
+    
     setAutoplay(false);
+    setIsTransitioning(true);
     setActiveIndex((current) => (current === 0 ? testimonials.length - 1 : current - 1));
+    
+    setTimeout(() => setIsTransitioning(false), 1000);
   };
 
   const goToNext = () => {
-    setAutoplay(false);
+    if (isTransitioning) return;
+    
+    setIsTransitioning(true);
     setActiveIndex((current) => (current + 1) % testimonials.length);
+    
+    setTimeout(() => setIsTransitioning(false), 1000);
+  };
+
+  const goToSlide = (index: number) => {
+    if (isTransitioning || index === activeIndex) return;
+    
+    setAutoplay(false);
+    setIsTransitioning(true);
+    setActiveIndex(index);
+    
+    setTimeout(() => setIsTransitioning(false), 1000);
   };
 
   return (
-    <section id="testimonials" ref={ref} className="section-padding bg-invictus-gray">
-      <div className="container-custom">
+    <section id="testimonials" ref={ref} className="py-20 bg-gray-50">
+      <style jsx>{`
+        .fade-in {
+          opacity: 0;
+          transform: translateY(30px);
+          transition: all 0.8s ease-out;
+        }
+        .fade-in.visible {
+          opacity: 1;
+          transform: translateY(0);
+        }
+        .carousel-container {
+          position: relative;
+          overflow: hidden;
+          border-radius: 16px;
+        }
+        .carousel-track {
+          display: flex;
+          transition: transform 1s cubic-bezier(0.25, 0.1, 0.25, 1);
+          will-change: transform;
+        }
+        .testimonial-slide {
+          min-width: 100%;
+          padding: 0 20px;
+          box-sizing: border-box;
+        }
+        .testimonial-card {
+          background: white;
+          border-radius: 12px;
+          padding: 32px;
+          margin: 0 10px;
+          box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+          position: relative;
+          overflow: hidden;
+        }
+        .testimonial-card::before {
+          content: '';
+          position: absolute;
+          top: 0;
+          left: 0;
+          right: 0;
+          height: 4px;
+          background: linear-gradient(90deg, #fbbf24, #f59e0b);
+        }
+        .nav-button {
+          position: absolute;
+          top: 50%;
+          transform: translateY(-50%);
+          z-index: 10;
+          background: white;
+          border: 2px solid #fbbf24;
+          border-radius: 50%;
+          width: 48px;
+          height: 48px;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          cursor: pointer;
+          transition: all 0.3s ease;
+          box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+        }
+        .nav-button:hover {
+          background: #fbbf24;
+          color: white;
+          transform: translateY(-50%) scale(1.1);
+        }
+        .nav-button:disabled {
+          opacity: 0.5;
+          cursor: not-allowed;
+          transform: translateY(-50%) scale(1);
+        }
+        .nav-button.prev {
+          left: -24px;
+        }
+        .nav-button.next {
+          right: -24px;
+        }
+        .dots-container {
+          display: flex;
+          justify-content: center;
+          gap: 12px;
+          margin-top: 32px;
+        }
+        .dot {
+          width: 12px;
+          height: 12px;
+          border-radius: 50%;
+          border: 2px solid #fbbf24;
+          background: transparent;
+          cursor: pointer;
+          transition: all 0.3s ease;
+        }
+        .dot.active {
+          background: #fbbf24;
+          transform: scale(1.2);
+        }
+        .dot:hover {
+          transform: scale(1.1);
+        }
+        .rating-stars {
+          display: flex;
+          gap: 2px;
+          margin: 16px 0;
+        }
+        .quote-icon {
+          position: absolute;
+          top: -10px;
+          right: 20px;
+          color: #fbbf24;
+          opacity: 0.2;
+        }
+      `}</style>
+      
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center mb-16">
-          <h2 className="text-3xl md:text-4xl font-bold mb-4">O que nossos alunos dizem</h2>
-          <p className="text-lg text-gray-600 max-w-3xl mx-auto">
+          <h2 className="text-4xl md:text-5xl font-bold mb-6 text-gray-900">
+            O que nossos alunos dizem
+          </h2>
+          <p className="text-xl text-gray-600 max-w-3xl mx-auto leading-relaxed">
             Veja as histórias de sucesso dos nossos alunos que conquistaram a fluência 
             em inglês com nossa metodologia exclusiva.
           </p>
         </div>
 
         <div className={`fade-in ${inView ? 'visible' : ''}`}>
-          <div className="relative max-w-4xl mx-auto">
-            <div className="absolute -top-10 -left-10 text-invictus-yellow opacity-20">
-              <Quote size={80} />
-            </div>
-
-            <div className="relative overflow-hidden rounded-xl bg-white shadow-lg p-8 md:p-12">
-              <div className="transition-all duration-500 ease-in-out">
-                <div className="flex flex-col md:flex-row items-center md:items-start gap-6">
-                  <div className="md:w-1/4 flex flex-col items-center">
-                    <img 
-                      src={testimonials[activeIndex].image} 
-                      alt={testimonials[activeIndex].name} 
-                      className="w-24 h-24 rounded-full object-cover border-4 border-invictus-yellow"
-                    />
-                    <div className="flex items-center mt-3">
-                      {[...Array(5)].map((_, i) => (
-                        <Star 
-                          key={i}
-                          size={16} 
-                          fill={i < testimonials[activeIndex].rating ? "#FFD700" : "none"} 
-                          stroke={i < testimonials[activeIndex].rating ? "#FFD700" : "#9CA3AF"}
-                          className="mx-0.5"
-                        />
-                      ))}
+          <div className="relative max-w-5xl mx-auto">
+            <div className="carousel-container">
+              <div 
+                className="carousel-track"
+                style={{
+                  transform: `translateX(-${activeIndex * 100}%)`
+                }}
+              >
+                {testimonials.map((testimonial, index) => (
+                  <div key={index} className="testimonial-slide">
+                    <div className="testimonial-card">
+                      <Quote size={32} className="quote-icon" />
+                      
+                      <div className="flex flex-col md:flex-row items-center md:items-start gap-8">
+                        <div className="flex-shrink-0 text-center">
+                          <img 
+                            src={testimonial.image} 
+                            alt={testimonial.name} 
+                            className="w-20 h-20 rounded-full object-cover border-4 border-yellow-400 mx-auto"
+                          />
+                          <div className="rating-stars justify-center">
+                            {[...Array(5)].map((_, i) => (
+                              <Star 
+                                key={i}
+                                size={16} 
+                                fill={i < testimonial.rating ? "#fbbf24" : "none"} 
+                                stroke={i < testimonial.rating ? "#fbbf24" : "#d1d5db"}
+                              />
+                            ))}
+                          </div>
+                        </div>
+                        
+                        <div className="flex-1 text-center md:text-left">
+                          <p className="text-gray-700 italic mb-6 text-lg leading-relaxed">
+                            "{testimonial.text}"
+                          </p>
+                          <div>
+                            <h4 className="font-semibold text-xl text-gray-900 mb-1">
+                              {testimonial.name}
+                            </h4>
+                            <p className="text-gray-500 text-sm">
+                              {testimonial.role}
+                            </p>
+                          </div>
+                        </div>
+                      </div>
                     </div>
                   </div>
-                  <div className="md:w-3/4 text-center md:text-left">
-                    <p className="text-gray-700 italic mb-6 text-lg">{testimonials[activeIndex].text}</p>
-                    <div>
-                      <h4 className="font-semibold text-xl">{testimonials[activeIndex].name}</h4>
-                      <p className="text-gray-500">{testimonials[activeIndex].role}</p>
-                    </div>
-                  </div>
-                </div>
+                ))}
               </div>
 
-              <div className="absolute top-1/2 left-4 transform -translate-y-1/2">
-                <button 
-                  onClick={goToPrevious}
-                  className="bg-invictus-yellow p-2 rounded-full text-invictus-black hover:bg-yellow-500 transition-colors"
-                  aria-label="Previous testimonial"
-                >
-                  <ChevronLeft size={24} />
-                </button>
-              </div>
-              <div className="absolute top-1/2 right-4 transform -translate-y-1/2">
-                <button 
-                  onClick={goToNext}
-                  className="bg-invictus-yellow p-2 rounded-full text-invictus-black hover:bg-yellow-500 transition-colors"
-                  aria-label="Next testimonial"
-                >
-                  <ChevronRight size={24} />
-                </button>
-              </div>
+              <button 
+                onClick={goToPrevious}
+                disabled={isTransitioning}
+                className="nav-button prev"
+                aria-label="Depoimento anterior"
+              >
+                <ChevronLeft size={20} />
+              </button>
+              
+              <button 
+                onClick={goToNext}
+                disabled={isTransitioning}
+                className="nav-button next"
+                aria-label="Próximo depoimento"
+              >
+                <ChevronRight size={20} />
+              </button>
             </div>
 
-            <div className="flex justify-center mt-6 gap-2">
+            <div className="dots-container">
               {testimonials.map((_, index) => (
                 <button
                   key={index}
-                  onClick={() => {
-                    setAutoplay(false);
-                    setActiveIndex(index);
-                  }}
-                  className={`w-3 h-3 rounded-full transition-colors ${
-                    index === activeIndex ? 'bg-invictus-yellow' : 'bg-gray-300'
-                  }`}
-                  aria-label={`Go to testimonial ${index + 1}`}
+                  onClick={() => goToSlide(index)}
+                  disabled={isTransitioning}
+                  className={`dot ${index === activeIndex ? 'active' : ''}`}
+                  aria-label={`Ir para depoimento ${index + 1}`}
                 />
               ))}
             </div>
