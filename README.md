@@ -54,3 +54,6 @@ Você é livre para estudar, adaptar e reutilizar o código com propósitos de a
 
 © 2025 - Sara Morais & Leilla Carvalho
 
+---
+
+👨‍🏫 **Sob a orientação de:** Luan Oliveira
