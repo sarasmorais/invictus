@@ -2,7 +2,7 @@
 
 Bem-vindo(a) ao repositório do projeto **Invictus Idiomas** — uma **landing page responsiva** criada com fins **estritamente educacionais**, como parte do processo de aprendizado em **desenvolvimento web front-end**.
 
-> 🚀 Projeto criado por **Sara Morais** e **[Seu Nome Aqui]**, com foco em design moderno, boas práticas de HTML, CSS e responsividade.
+> 🚀 Projeto criado com foco em design moderno, boas práticas de HTML, CSS e responsividade.
 
 ---
 
