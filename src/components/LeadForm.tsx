@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useInView } from 'react-intersection-observer';
-import { Send, Phone, Mail, MapPin, Check, Loader } from 'lucide-react';
+import { Send, Phone, Mail, Check, Loader, Clock } from 'lucide-react';
 
 const LeadForm: React.FC = () => {
   const [ref, inView] = useInView({
@@ -22,23 +22,23 @@ const LeadForm: React.FC = () => {
 
   const validate = () => {
     const newErrors: Record<string, string> = {};
-    
+
     if (!formData.name.trim()) {
       newErrors.name = 'Nome é obrigatório';
     }
-    
+
     if (!formData.email.trim()) {
       newErrors.email = 'Email é obrigatório';
     } else if (!/\S+@\S+\.\S+/.test(formData.email)) {
       newErrors.email = 'Email inválido';
     }
-    
+
     if (!formData.phone.trim()) {
       newErrors.phone = 'Telefone é obrigatório';
     } else if (!/^\d{10,11}$/.test(formData.phone.replace(/\D/g, ''))) {
       newErrors.phone = 'Telefone inválido';
     }
-    
+
     setErrors(newErrors);
     return Object.keys(newErrors).length === 0;
   };
@@ -46,7 +46,7 @@ const LeadForm: React.FC = () => {
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) => {
     const { name, value } = e.target;
     setFormData(prev => ({ ...prev, [name]: value }));
-    
+
     // Clear error when user types
     if (errors[name]) {
       setErrors(prev => {
@@ -59,11 +59,11 @@ const LeadForm: React.FC = () => {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    
+
     if (!validate()) return;
-    
+
     setSubmitting(true);
-    
+
     // Simulate API call
     try {
       await new Promise(resolve => setTimeout(resolve, 1500));
@@ -87,7 +87,7 @@ const LeadForm: React.FC = () => {
   const formatPhone = (value: string) => {
     // Remove non-digits
     const digits = value.replace(/\D/g, '');
-    
+
     if (digits.length <= 2) {
       return digits;
     } else if (digits.length <= 6) {
@@ -102,7 +102,7 @@ const LeadForm: React.FC = () => {
   const handlePhoneChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const formattedValue = formatPhone(e.target.value);
     setFormData(prev => ({ ...prev, phone: formattedValue }));
-    
+
     // Clear error when user types
     if (errors.phone) {
       setErrors(prev => {
@@ -122,10 +122,10 @@ const LeadForm: React.FC = () => {
             <div>
               <h2 className="text-3xl md:text-4xl font-bold mb-6">Entre em contato</h2>
               <p className="text-lg text-gray-300 mb-8">
-                Estamos prontos para ajudar você a iniciar sua jornada rumo à fluência em inglês. 
+                Estamos prontos para ajudar você a iniciar sua jornada rumo à fluência em inglês.
                 Preencha o formulário ou entre em contato diretamente pelos canais abaixo.
               </p>
-              
+
               <div className="space-y-6">
                 <div className="flex items-start">
                   <div className="bg-invictus-yellow p-3 rounded-full mr-4">
@@ -133,43 +133,43 @@ const LeadForm: React.FC = () => {
                   </div>
                   <div>
                     <h3 className="font-semibold text-xl mb-1">Telefone</h3>
-                    <p className="text-gray-300">(11) 3456-7890</p>
-                    <p className="text-gray-300">(11) 98765-4321</p>
+                    <p className="text-gray-300">(85) 3393-3500</p>
+                    <p className="text-gray-300">(85) 99949-0466</p>
                   </div>
                 </div>
-                
+
                 <div className="flex items-start">
                   <div className="bg-invictus-yellow p-3 rounded-full mr-4">
                     <Mail size={24} className="text-invictus-black" />
                   </div>
                   <div>
                     <h3 className="font-semibold text-xl mb-1">Email</h3>
-                    <p className="text-gray-300">contato@invictusidiomas.com.br</p>
-                    <p className="text-gray-300">suporte@invictusidiomas.com.br</p>
+                    <p className="text-gray-300 mb-6">contato@invictusidiomas.com.br</p>
+                    {/* <p className="text-gray-300">suporte@invictusidiomas.com.br</p> */}
                   </div>
                 </div>
-                
+
                 <div className="flex items-start">
                   <div className="bg-invictus-yellow p-3 rounded-full mr-4">
-                    <MapPin size={24} className="text-invictus-black" />
+                    <Clock size={24} className="text-invictus-black" />
                   </div>
                   <div>
-                    <h3 className="font-semibold text-xl mb-1">Endereço</h3>
+                    <h3 className="font-semibold text-xl mb-1">Horário de Atendimento</h3>
                     <p className="text-gray-300">
-                      Av. Paulista, 1000 - Bela Vista<br />
-                      São Paulo - SP, 01310-100
+                      Segunda a Sexta: 8h às 20h<br />
+                      Sábado: 9h às 15h
                     </p>
                   </div>
                 </div>
               </div>
-              
-              <div className="mt-8">
+
+              {/* <div className="mt-8">
                 <h3 className="font-semibold text-xl mb-4">Horário de Atendimento</h3>
                 <p className="text-gray-300">Segunda a Sexta: 8h às 20h</p>
                 <p className="text-gray-300">Sábado: 9h às 15h</p>
-              </div>
+              </div> */}
             </div>
-            
+
             {/* Right Column - Form */}
             <div>
               {submitted ? (
@@ -179,10 +179,10 @@ const LeadForm: React.FC = () => {
                   </div>
                   <h3 className="text-2xl font-bold mb-4">Mensagem Enviada!</h3>
                   <p className="text-lg mb-6">
-                    Agradecemos seu interesse. Um de nossos consultores entrará em contato em 
+                    Agradecemos seu interesse. Um de nossos consultores entrará em contato em
                     breve para agendar sua aula experimental.
                   </p>
-                  <button 
+                  <button
                     onClick={() => setSubmitted(false)}
                     className="btn-primary"
                   >
@@ -192,7 +192,7 @@ const LeadForm: React.FC = () => {
               ) : (
                 <div className="bg-invictus-dark-gray rounded-xl p-6 md:p-8">
                   <h3 className="text-2xl font-bold mb-6">Agende uma Aula Grátis</h3>
-                  
+
                   <form onSubmit={handleSubmit}>
                     <div className="mb-4">
                       <label htmlFor="name" className="block text-sm font-medium mb-1">
@@ -204,16 +204,15 @@ const LeadForm: React.FC = () => {
                         name="name"
                         value={formData.name}
                         onChange={handleChange}
-                        className={`w-full px-4 py-3 rounded-md bg-gray-700 text-white border ${
-                          errors.name ? 'border-red-500' : 'border-gray-600'
-                        }`}
+                        className={`w-full px-4 py-3 rounded-md bg-gray-700 text-white border ${errors.name ? 'border-red-500' : 'border-gray-600'
+                          }`}
                         placeholder="Seu nome completo"
                       />
                       {errors.name && (
                         <p className="mt-1 text-red-500 text-sm">{errors.name}</p>
                       )}
                     </div>
-                    
+
                     <div className="mb-4">
                       <label htmlFor="email" className="block text-sm font-medium mb-1">
                         Email <span className="text-red-500">*</span>
@@ -224,16 +223,15 @@ const LeadForm: React.FC = () => {
                         name="email"
                         value={formData.email}
                         onChange={handleChange}
-                        className={`w-full px-4 py-3 rounded-md bg-gray-700 text-white border ${
-                          errors.email ? 'border-red-500' : 'border-gray-600'
-                        }`}
+                        className={`w-full px-4 py-3 rounded-md bg-gray-700 text-white border ${errors.email ? 'border-red-500' : 'border-gray-600'
+                          }`}
                         placeholder="seu.email@exemplo.com"
                       />
                       {errors.email && (
                         <p className="mt-1 text-red-500 text-sm">{errors.email}</p>
                       )}
                     </div>
-                    
+
                     <div className="mb-4">
                       <label htmlFor="phone" className="block text-sm font-medium mb-1">
                         Telefone <span className="text-red-500">*</span>
@@ -244,16 +242,15 @@ const LeadForm: React.FC = () => {
                         name="phone"
                         value={formData.phone}
                         onChange={handlePhoneChange}
-                        className={`w-full px-4 py-3 rounded-md bg-gray-700 text-white border ${
-                          errors.phone ? 'border-red-500' : 'border-gray-600'
-                        }`}
+                        className={`w-full px-4 py-3 rounded-md bg-gray-700 text-white border ${errors.phone ? 'border-red-500' : 'border-gray-600'
+                          }`}
                         placeholder="(00) 00000-0000"
                       />
                       {errors.phone && (
                         <p className="mt-1 text-red-500 text-sm">{errors.phone}</p>
                       )}
                     </div>
-                    
+
                     <div className="mb-4">
                       <label htmlFor="interest" className="block text-sm font-medium mb-1">
                         Curso de Interesse
@@ -272,7 +269,7 @@ const LeadForm: React.FC = () => {
                         <option value="other">Outro</option>
                       </select>
                     </div>
-                    
+
                     <div className="mb-6">
                       <label htmlFor="message" className="block text-sm font-medium mb-1">
                         Mensagem
@@ -287,14 +284,14 @@ const LeadForm: React.FC = () => {
                         placeholder="Conte-nos sobre seus objetivos com o inglês..."
                       ></textarea>
                     </div>
-                    
+
                     {errors.submit && (
                       <div className="mb-4 p-3 bg-red-900 rounded-md text-center">
                         {errors.submit}
                       </div>
                     )}
-                    
-                    <button 
+
+                    <button
                       type="submit"
                       disabled={submitting}
                       className="btn-primary w-full flex items-center justify-center"

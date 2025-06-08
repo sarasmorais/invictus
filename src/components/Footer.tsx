@@ -1,11 +1,11 @@
 import React from 'react';
-import { Facebook, Instagram, Twitter, Youtube, Mail, Phone } from 'lucide-react'; // Assuming Twitter might be used later, keeping it.
+import { Facebook, Instagram, Youtube, } from 'lucide-react'; // Assuming Twitter might be used later, keeping it.
 
 const Footer: React.FC = () => {
   const currentYear = new Date().getFullYear();
 
   return (
-    <footer className="bg-invictus-black text-white pt-16 pb-8">
+    <footer className="bg-invictus-dark-gray text-white pt-12 pb-8">
       <div className="container-custom">
         {/* Main Footer Content */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mb-12">
@@ -33,77 +33,69 @@ const Footer: React.FC = () => {
           </div>
 
           {/* Column 2 - Links Úteis (Previously Column 3) */}
-          <div>
-            <h3 className="text-xl font-semibold mb-4">Links Úteis</h3>
+          <div className="ml-32">
+            <h3 className="text-xl font-semibold mb-4 whitespace-nowrap">Links Úteis</h3>
             <ul className="space-y-2">
               <li>
-                <a href="#" className="text-gray-300 hover:text-invictus-yellow transition-colors">Sobre Nós</a>
+                <a href="#" className="text-gray-300 hover:text-invictus-yellow transition-colors whitespace-nowrap">Sobre Nós</a>
               </li>
               <li>
-                <a href="#" className="text-gray-300 hover:text-invictus-yellow transition-colors">Metodologia</a>
+                <a href="#" className="text-gray-300 hover:text-invictus-yellow transition-colors whitespace-nowrap">Metodologia</a>
               </li>
               <li>
-                <a href="#" className="text-gray-300 hover:text-invictus-yellow transition-colors">Blog</a>
+                <a href="#" className="text-gray-300 hover:text-invictus-yellow transition-colors whitespace-nowrap">Blog</a>
               </li>
               <li>
-                <a href="#" className="text-gray-300 hover:text-invictus-yellow transition-colors">Perguntas Frequentes</a>
+                <a href="#" className="text-gray-300 hover:text-invictus-yellow transition-colors whitespace-nowrap">Perguntas Frequentes</a>
               </li>
               <li>
-                <a href="#" className="text-gray-300 hover:text-invictus-yellow transition-colors">Trabalhe Conosco</a>
+                <a href="#" className="text-gray-300 hover:text-invictus-yellow transition-colors whitespace-nowrap">Trabalhe Conosco</a>
               </li>
               <li>
-                <a href="#" className="text-gray-300 hover:text-invictus-yellow transition-colors">Política de Privacidade</a>
+                <a href="#" className="text-gray-300 hover:text-invictus-yellow transition-colors whitespace-nowrap">Política de Privacidade</a>
               </li>
             </ul>
           </div>
 
           {/* Column 3 - Nossas Unidades (New Column) */}
-          <div>
-            <h3 className="text-xl font-semibold mb-4">Nossas Unidades</h3>
-            <div className="space-y-4">
-              <div>
-                <p className="font-semibold text-gray-200">Unidade Aldeota</p>
-                <p className="text-gray-300">Rua Carlos Vasconcelos 1240</p>
-                <p className="text-gray-300">85 3016.1200</p>
+          <div className="ml-32">
+            <div className="text-center mb-4">
+              <h3 className="text-xl font-semibold ml-36 whitespace-nowrap">Nossas Unidades</h3>
+            </div>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-72">
+              <div className="space-y-4">
+                <div>
+                  <p className="font-semibold text-gray-200 whitespace-nowrap">Unidade Aldeota</p>
+                  <p className="text-gray-300 whitespace-nowrap">Rua Carlos Vasconcelos 1240</p>
+                  <p className="text-gray-300 whitespace-nowrap">85 3016.1200</p>
+                </div>
+                <div>
+                  <p className="font-semibold text-gray-200 whitespace-nowrap">Unidade Cid. dos Funcionários</p>
+                  <p className="text-gray-300 whitespace-nowrap">Av. Oliveira Paiva, 740</p>
+                  <p className="text-gray-300 whitespace-nowrap">85 3393.7900</p>
+                </div>
               </div>
-              <div>
-                <p className="font-semibold text-gray-200">Unidade Cid. dos Funcionários</p>
-                <p className="text-gray-300">Av. Oliveira Paiva, 740</p>
-                <p className="text-gray-300">85 3393.7900</p>
-              </div>
-              <div>
-                <p className="font-semibold text-gray-200">Unidade Bez. de Menezes</p>
-                <p className="text-gray-300">Av. Bezerra de Menezes, 2571</p>
-                <p className="text-gray-300">85 2180.6118</p>
-              </div>
-              <div>
-                <p className="font-semibold text-gray-200">Unidade Treze de Maio</p>
-                <p className="text-gray-300">Av. Treze de Maio, 1043</p>
-                <p className="text-gray-300">85 3393.9000</p>
+
+              <div className="space-y-4">
+                <div>
+                  <p className="font-semibold text-gray-200 whitespace-nowrap">Unidade Bez. de Menezes</p>
+                  <p className="text-gray-300 whitespace-nowrap">Av. Bezerra de Menezes, 2571</p>
+                  <p className="text-gray-300 whitespace-nowrap">85 2180.6118</p>
+                </div>
+                <div>
+                  <p className="font-semibold text-gray-200 whitespace-nowrap">Unidade Treze de Maio</p>
+                  <p className="text-gray-300 whitespace-nowrap">Av. Treze de Maio, 1043</p>
+                  <p className="text-gray-300 whitespace-nowrap">85 3393.9000</p>
+                </div>
               </div>
             </div>
-          </div>
-
-          {/* Column 4 - Contato (Previously Column 4) */}
-          <div>
-            <h3 className="text-xl font-semibold mb-4">Contato</h3>
-            <ul className="space-y-3">
-              <li className="flex items-start">
-                <Mail size={20} className="text-invictus-yellow mr-2 mt-1 flex-shrink-0" />
-                <span className="text-gray-300">contato@invictusidiomas.com.br</span>
-              </li>
-              <li className="flex items-start">
-                <Phone size={20} className="text-invictus-yellow mr-2 mt-1 flex-shrink-0" />
-                <span className="text-gray-300">(11) 3456-7890<br />(11) 98765-4321</span> {/* Mantido o contato original */}
-              </li>
-            </ul>
           </div>
         </div>
 
         {/* Bottom Bar */}
-        <div className="border-t border-gray-800 pt-8">
+        <div className="border-t border-gray-800 pt-4">
           <div className="flex flex-col md:flex-row justify-between items-center">
-            <p className="text-gray-400 text-sm mb-4 md:mb-0">
+            <p className="text-gray-400 text-sm mb-2 md:mb-0">
               © {currentYear} Invictus Idiomas. Todos os direitos reservados.
             </p>
             <div className="flex space-x-4">
