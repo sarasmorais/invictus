@@ -1,5 +1,5 @@
 import React from 'react';
-import { Facebook, Instagram, Youtube, } from 'lucide-react'; // Assuming Twitter might be used later, keeping it.
+import { Facebook, Instagram, Youtube, } from 'lucide-react';
 
 const Footer: React.FC = () => {
   const currentYear = new Date().getFullYear();
@@ -7,9 +7,9 @@ const Footer: React.FC = () => {
   return (
     <footer className="bg-invictus-dark-gray text-white pt-12 pb-8">
       <div className="container-custom">
-        {/* Main Footer Content */}
+
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mb-12">
-          {/* Column 1 - About */}
+
           <div>
             <h2 className="text-2xl font-bold mb-4 flex items-center">
               <span className="text-invictus-yellow">INVICTUS</span>
@@ -32,7 +32,6 @@ const Footer: React.FC = () => {
             </div>
           </div>
 
-          {/* Column 2 - Links Úteis (Previously Column 3) */}
           <div className="ml-32">
             <h3 className="text-xl font-semibold mb-4 whitespace-nowrap">Links Úteis</h3>
             <ul className="space-y-2">
@@ -57,8 +56,7 @@ const Footer: React.FC = () => {
             </ul>
           </div>
 
-          {/* Column 3 - Nossas Unidades (New Column) */}
-          <div className="ml-32">
+          <div className="ml-24">
             <div className="text-center mb-4">
               <h3 className="text-xl font-semibold ml-36 whitespace-nowrap">Nossas Unidades</h3>
             </div>
@@ -92,7 +90,6 @@ const Footer: React.FC = () => {
           </div>
         </div>
 
-        {/* Bottom Bar */}
         <div className="border-t border-gray-800 pt-4">
           <div className="flex flex-col md:flex-row justify-between items-center">
             <p className="text-gray-400 text-sm mb-2 md:mb-0">
